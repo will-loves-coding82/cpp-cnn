@@ -1,0 +1,7 @@
+{
+    "files.associations": {
+        "tuple": "cpp",
+        "algorithm": "cpp",
+        "functional": "cpp"
+    }
+}

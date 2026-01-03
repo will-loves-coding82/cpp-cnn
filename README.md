@@ -1,6 +1,7 @@
 # Example README.md file for Coursera Projects
 
 ## Overview
+Simple Neural Network that trains on the XOR function with 4 input features, 2 hidden layers, and 1 output layer 
 
 ## Code Organization
 
