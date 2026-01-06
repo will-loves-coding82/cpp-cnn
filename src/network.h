@@ -31,7 +31,7 @@ class Network {
         void forward(const Matrix &input);
         void backward(const Matrix &input, const Matrix &target);
 
-        void update(Optimizer *opt);
+        void update(Optimizer &opt);
 
         Matrix &output() { layers.back()->output(); };
 };

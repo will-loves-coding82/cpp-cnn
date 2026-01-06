@@ -21,7 +21,18 @@ void Network::backward(const Matrix &input, const Matrix &target) {
     loss->evaluate(input, target);
 
     // Propogate through previous layers
-    for (int i = num_layers - 2; i > 0; i++) {
+    for (int i = num_layers - 2; i > 0; i--) {
+        // Calulcate gradient for eachl
         layers[i]->backward(layers[i-1]->output(), layers[i + 1]->back_gradient());
+    }
+}
+
+void Network::update(Optimizer &opt) {
+    int num_layers = layers.size();
+
+    for (int i = num_layers; i > 0; i--)
+    {
+        // Update weights for each layer
+        layers[i]->update(opt);
     }
 }

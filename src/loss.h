@@ -5,7 +5,7 @@ class Loss {
         float loss;
 
         // Gradient w.r.t input. Used for back propogation starting from 
-        // the last layer
+        // the last output layer
         Matrix grad_bottom;
 
     public:
@@ -13,7 +13,6 @@ class Loss {
         // destructors have fixed names (~ClassName). The compiler won't automatically 
         // chain them polymorphically without the virtual keyword.
         virtual ~Loss() {}
-
         virtual void evaluate(const Matrix &pred, const Matrix &target) = 0;
         virtual float output() { return loss; }
         virtual const Matrix &back_gradient() { return grad_bottom; }
