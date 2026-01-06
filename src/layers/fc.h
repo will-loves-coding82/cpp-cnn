@@ -10,13 +10,12 @@ class FC : public Layer {
         Vector grad_bias;
 
         // Input and output dimensions
-        int d_in, d_out;
+        int dim_in, dim_out;
 
         void init();
 
     public:
-
-    
-
-
+        FC(int input_dim, int output_dim) { init(); };
+        void forward(Matrix &bottom);
+        void backward(Matrix &bottom, Matrix &grad_top);
 };

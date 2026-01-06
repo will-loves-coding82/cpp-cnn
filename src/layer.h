@@ -15,7 +15,7 @@
 class Layer
 {
 protected:
-    Matrix top;         // layer output
+    Matrix top;         // every layer has an output
     Matrix grad_bottom; // gradient w.r.t input
 
 public:

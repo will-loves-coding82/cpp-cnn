@@ -1,3 +1,6 @@
+#ifndef LOSS_H_
+#define LOSS_H_
+
 #include "./utils.h"
 
 class Loss {
@@ -17,3 +20,5 @@ class Loss {
         virtual float output() { return loss; }
         virtual const Matrix &back_gradient() { return grad_bottom; }
 };
+
+#endif
