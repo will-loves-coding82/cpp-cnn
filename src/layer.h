@@ -29,7 +29,7 @@ public:
     virtual void backward(const Matrix &bottom, const Matrix &grad_top) = 0;
 
     // Updates this layer's grad
-    virtual void update(Optimizer &opt) {}
+    virtual void update(Optimizer &opt){};
 
     // Returns a layer's output matrix
     virtual const Matrix &output() { return top; }

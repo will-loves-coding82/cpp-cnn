@@ -12,6 +12,8 @@ FC::FC(int input_dim, int output_dim) {
     grad_bias.resize(dim_out);
 
     // Initialize Weights and Bias
+    set_normal_random(weight.data(), weight.size(), 0, 0.01);
+    set_normal_random(bias.data(), bias.size(), 0, 0.01);
 }
 
 void FC::forward(Matrix &bottom) {

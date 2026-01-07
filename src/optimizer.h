@@ -1,20 +1,22 @@
-#ifndef SRC_OPTIMIZER_H_
-#define SRC_OPTIMIZER_H_
+#include <Eigen/Core>
+#include <Eigen/Dense>
 
-#include "./utils.h"
+class Optimizer {
+    public:
+        float learning_rate;
 
-class Optimizer
-{
-protected:
-    float lr;    // learning rate
-    float decay; // weight decay factor (default: 0)
+        Optimizer(float lr) : learning_rate(lr){};
 
-public:
-    explicit Optimizer(float lr = 0.01, float decay = 0.0) : lr(lr), decay(decay) {}
-    virtual ~Optimizer() {}
-
-    virtual void update(Vector::AlignedMapType &w,
-                        Vector::ConstAlignedMapType &dw) = 0;
+        /**
+         * @brief Updates a layer's parameters.
+         * @param param is a Vector::AlignedMapType which allows Eigen to treat it as a raw memory block.
+         * @param grad is a Vector::ConstAlignedMapType which is similar as the above but is also immutable.
+         * 
+         * @return void
+         *  
+         * @details
+         * The Aligned keyword indicates that the memory pointer is aligned allowing Eigen to use
+         * faster SIMD instructions
+         */
+        void update(Vector::AlignedMapType& param, Vector::ConstAlignedMapType& grad);
 };
-
-#endif // SRC_OPTIMIZER_H_

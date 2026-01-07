@@ -3,7 +3,7 @@
 
 #include "../loss.h"
 
-class CrossEntropyLoss : public Loss
+class SoftmaxLoss : public Loss
 {
 public:
     void evaluate(const Matrix &pred, const Matrix &target);

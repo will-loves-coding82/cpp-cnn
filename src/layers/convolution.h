@@ -28,10 +28,15 @@ class Convolution : public Layer {
             width_in(w_in),
             kernel_width(k_w),
             kernel_height(k_h),
-            width_out(1 + (w_in - k_w / 2 ) / stride),
-            height_out(1 + (h_in - k_h / 2 ) / stride)
+            width_out(w_in - k_w / stride + 1),
+            height_out(h_in - k_h / stride + 1)
         { init(); };
 
         void forward(Matrix &bottom);
         void backward(Matrix &bottom, Matrix &grad_top);
+
+        void im2col(Vector &img, Matrix &data_col);
+        void col2im(Matrix &data_col, Vector &image);
+
+        void update(Optimizer &opt) {};
 };

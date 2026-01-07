@@ -25,6 +25,7 @@ void Network::backward(const Matrix &input, const Matrix &target) {
         // Calulcate gradient for eachl
         layers[i]->backward(layers[i-1]->output(), layers[i + 1]->back_gradient());
     }
+    
 }
 
 void Network::update(Optimizer &opt) {
