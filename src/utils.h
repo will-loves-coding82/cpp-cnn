@@ -1,7 +1,7 @@
 #ifndef SRC_UTILS_H_
 #define SRC_UTILS_H_
 
-#include <Eigen/Core>
+#include "Eigen/Core"
 #include <algorithm>
 #include <iostream>
 #include <random>
@@ -9,6 +9,7 @@
 typedef Eigen::Matrix<float, Eigen::Dynamic, Eigen::Dynamic> Matrix;
 typedef Eigen::Matrix<float, Eigen::Dynamic, 1> Vector;
 typedef Eigen::Array<float, 1, Eigen::Dynamic> RowVector;
+using Vector = Eigen::VectorXf;
 
 static std::default_random_engine generator;
 

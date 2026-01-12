@@ -15,10 +15,10 @@ class Loss {
         // Unlike other member functions where you might override them explicitly, 
         // destructors have fixed names (~ClassName). The compiler won't automatically 
         // chain them polymorphically without the virtual keyword.
-        virtual ~Loss() {}
-        virtual void evaluate(const Matrix &pred, const Matrix &target) = 0;
-        virtual float output() { return loss; }
-        virtual const Matrix &back_gradient() { return grad_bottom; }
+        virtual ~Loss(){};
+        virtual void evaluate(const Matrix &pred, const Matrix &target){};
+        virtual float output() { return loss; };
+        virtual const Matrix& back_gradient() { return grad_bottom; };
 };
 
 #endif

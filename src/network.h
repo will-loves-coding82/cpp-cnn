@@ -1,3 +1,6 @@
+#ifndef NETWORK_H_
+#define NETWORK_H_
+
 #include "./layer.h"
 #include "./loss.h"
 #include "./optimizer.h"
@@ -33,5 +36,7 @@ class Network {
 
         void update(Optimizer &opt);
 
-        Matrix &output() { layers.back()->output(); };
+        const Matrix& output() { return layers.back()->output(); };
 };
+
+#endif

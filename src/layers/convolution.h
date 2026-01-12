@@ -1,3 +1,6 @@
+#ifndef CONVOLUTION_H_
+#define CONVOLUTION_H_
+
 #include "../layer.h"
 
 // Valid padding convolution for simplicity
@@ -22,21 +25,14 @@ class Convolution : public Layer {
         void init();
 
     public:
-        Convolution(
-            int h_in, int w_in, int k_w, int k_h, int c_in, int c_out, int stride = 1) :
-            height_in(h_in),
-            width_in(w_in),
-            kernel_width(k_w),
-            kernel_height(k_h),
-            width_out(w_in - k_w / stride + 1),
-            height_out(h_in - k_h / stride + 1)
-        { init(); };
+        Convolution(int h_in, int w_in, int k_w, int k_h, int c_in, int c_out, int stride = 1);
 
         void forward(Matrix &bottom);
         void backward(Matrix &bottom, Matrix &grad_top);
 
         void im2col(Vector &img, Matrix &data_col);
         void col2im(Matrix &data_col, Vector &image);
-
-        void update(Optimizer &opt) {};
+        void update(Optimizer &opt);
 };
+
+#endif

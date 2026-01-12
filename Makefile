@@ -34,7 +34,9 @@
 # Define the compiler and flags
 NVCC = /usr/local/cuda/bin/nvcc
 CXX = g++
-CXXFLAGS = -std=c++17 -I/usr/local/cuda/include -Iinclude
+
+# Tell the compiler to look for cuda and Eigen header files
+CXXFLAGS = -std=c++17 -I/usr/local/cuda/include -I./src -Iinclude
 LDFLAGS = -L/usr/local/cuda/lib64 -lcudart -lnppc -lnppial -lnppicc -lnppidei -lnppif -lnppig -lnppim -lnppist -lnppisu -lnppitc
 
 # Define directories
@@ -42,6 +44,9 @@ SRC_DIR = src
 BIN_DIR = bin
 DATA_DIR = data
 LIB_DIR = lib
+
+SRC = $(shell find $(SRC_DIR) -name "*.cpp")
+TARGET = $(BIN_DIR)/main
 
 # Define the default rule
 all: $(TARGET)

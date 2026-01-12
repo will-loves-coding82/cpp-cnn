@@ -1,8 +1,15 @@
+#ifndef SGD_H_
+#define SGD_H_
+
 #include "../optimizer.h"
 #include "../utils.h"
 
-class SGD : Optimizer {
+class SGD : public Optimizer {
+    protected:
+        float learning_rate;
     public:
-        SGD(float lr) : Optimizer(lr){};
+        explicit SGD(float lr) : learning_rate(lr) { };
         void update(Vector::AlignedMapType &param, Vector::ConstAlignedMapType &grad);
 };
+
+#endif

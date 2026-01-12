@@ -1,6 +1,5 @@
 #include "./fc.h"
 
-
 FC::FC(int input_dim, int output_dim) {
     dim_in = input_dim;
     dim_out = output_dim;

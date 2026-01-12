@@ -1,7 +1,8 @@
 #include "./convolution.h"
 
-Convolution::Convolution(int height_in, int width_in, int kernel_width, int kernel_height, int channel_in, int channel_out, int stride) {
-
+Convolution::Convolution(int height_in, int width_in, int kernel_width, int kernel_height, int channel_in, int channel_out, int stride) : 
+    height_in(height_in), width_in(width_in), kernel_width(kernel_width), kernel_height(kernel_height), width_out(width_in - kernel_width / stride + 1), height_out(height_in - kernel_height / stride + 1)
+{
     weight.resize(channel_in * kernel_height * kernel_width, channel_out);
     bias.resize(channel_out);
 
@@ -23,7 +24,7 @@ void Convolution::forward(Matrix &bottom) {
         data_cols[i] = data_col;
 
         Matrix result = data_col * weight;
-        result.rowwise() += bias;
+        result.rowwise() += bias.transpose();
         top.col(i) = Eigen::Map<Vector>(result.data(), result.size());
     }
 };
