@@ -1,7 +1,7 @@
 # Example README.md file for Coursera Projects
 
 ## Overview
-Simple Neural Network that trains on the XOR function with 4 input features, 2 hidden layers, and 1 output layer 
+A WIP Convolutional Neural Network inspired by the mini-DNN framework. I was heavily motivated to learn the mathemetical reasoning at each layer and the process to compute gradients during back propogation.
 
 ## Code Organization
 
