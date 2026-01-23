@@ -1,7 +1,7 @@
 # Example README.md file for Coursera Projects
 
 ## Overview
-A WIP Convolutional Neural Network inspired by the mini-DNN framework. I was heavily motivated to learn the mathemetical reasoning at each layer and the process to compute gradients during back propogation.
+A WIP Convolutional Neural Network inspired by the mini-DNN framework. I was heavily motivated to learn the mathemetical reasoning at each layer and the process to compute gradients during back propogation. Much of the code is written in C++ and mirrors much of the same functionality as high level Python libraries like Keras Layers. My goal is to eventually speed certain calculations with GPU acceleration.
 
 ## Code Organization
 
