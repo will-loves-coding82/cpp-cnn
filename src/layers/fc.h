@@ -18,8 +18,9 @@ class FC : public Layer {
 
     public:
         FC(int input_dim, int output_dim);
-        void forward(Matrix &bottom);
-        void backward(Matrix &bottom, Matrix &grad_top);
+        void forward(const Matrix &bottom);
+        void backward(const Matrix &bottom, const Matrix &grad_top);
+        int output_dim() { return dim_out; };
 };
 
 #endif

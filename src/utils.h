@@ -46,14 +46,14 @@ inline Matrix one_hot_encode(const Matrix &y, int n_value)
 }
 
 // classification accuracy
-inline float compute_accuracy(const Matrix &preditions, const Matrix &labels)
+inline float compute_accuracy(const Matrix &predictions, const Matrix &labels)
 {
-    int n = preditions.cols();
+    int n = predictions.cols();
     float acc = 0;
     for (int i = 0; i < n; i++)
     {
         Matrix::Index max_index;
-        float max_value = preditions.col(i).maxCoeff(&max_index);
+        float max_value = predictions.col(i).maxCoeff(&max_index);
         acc += int(max_index) == labels(i);
     }
     return acc / n;

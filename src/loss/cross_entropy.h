@@ -1,9 +1,9 @@
-#ifndef SOFTMAX_LOSS_H_
-#define SOFTMAX_LOSS_H_
+#ifndef CROSS_ENTROPY_H_
+#define CROSS_ENTROPY_H_
 
 #include "../loss.h"
 
-class SoftMaxLoss : public Loss
+class CrossEntropy : public Loss
 {
 public:
     void evaluate(const Matrix &pred, const Matrix &target);

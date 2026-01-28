@@ -5,8 +5,8 @@
 
 class ReLU : public Layer {
     public:
-        void forward(Matrix &bottom);
-        void backward(Matrix &bottom, Matrix &grad_top);
+        void forward(const Matrix &bottom);
+        void backward(const Matrix &bottom, const Matrix &grad_top);
 };
 
 #endif

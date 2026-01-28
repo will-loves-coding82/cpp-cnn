@@ -1,27 +1,36 @@
 #include "./convolution.h"
+#include <iostream>
 
-Convolution::Convolution(int height_in, int width_in, int kernel_width, int kernel_height, int channel_in, int channel_out, int stride) : 
-    height_in(height_in), width_in(width_in), kernel_width(kernel_width), kernel_height(kernel_height), width_out(width_in - kernel_width / stride + 1), height_out(height_in - kernel_height / stride + 1)
+Convolution::Convolution(int height_in, int width_in, int kernel_width, int kernel_height,
+                         int channel_in, int channel_out, int stride) : height_in(height_in), width_in(width_in), kernel_width(kernel_width), kernel_height(kernel_height),
+                                                                        channel_in(channel_in), channel_out(channel_out), stride(stride),
+                                                                        width_out((width_in - kernel_width) / stride + 1),
+                                                                        height_out((height_in - kernel_height) / stride + 1)
 {
+    dim_in = channel_in * width_in * height_in;
+    dim_out = channel_out * width_out * height_out;
+
     weight.resize(channel_in * kernel_height * kernel_width, channel_out);
     bias.resize(channel_out);
-
     grad_weight.resize(channel_in * kernel_height * kernel_width, channel_out);
     grad_bias.resize(channel_out);
 
-    // Initialize Weights and Bias
     set_normal_random(weight.data(), weight.size(), 0, 0.01);
     set_normal_random(bias.data(), bias.size(), 0, 0.01);
-};
-
-void Convolution::forward(Matrix &bottom) {
+}
+void Convolution::forward(const Matrix &bottom) {
     int batch_size = bottom.cols();
+    top.resize(height_out * width_out * channel_out, batch_size);
+    data_cols.resize(batch_size);
+
     for (int i = 0; i < batch_size; i++) {
         // Convert to im2col for GEMM
         Vector image = bottom.col(i);
         Matrix data_col;
+        // std::cout << "performing im2col on image " << i << std::endl;
         im2col(image, data_col);
         data_cols[i] = data_col;
+        // std::cout << "calculated im2col successfully" << std::endl;
 
         Matrix result = data_col * weight;
         result.rowwise() += bias.transpose();
@@ -29,23 +38,22 @@ void Convolution::forward(Matrix &bottom) {
     }
 };
 
-// https://github.com/iamhankai/mini-dnn-cpp/blob/master/src/layer/conv.cc
-void Convolution::update(Optimizer &opt)
-{
-    Vector::AlignedMapType weight_vec(weight.data(), weight.size());
-    Vector::AlignedMapType bias_vec(bias.data(), bias.size());
-    Vector::ConstAlignedMapType grad_weight_vec(grad_weight.data(), grad_weight.size());
-    Vector::ConstAlignedMapType grad_bias_vec(grad_bias.data(), grad_bias.size());
+void Convolution::backward(const Matrix &bottom, const Matrix &grad_top) {
+    std::cout << "computing Conv backward" << std::endl;
+    std::cout << "bottom rows: " << bottom.rows() << ", cols: " << bottom.cols() << std::endl;
+    std::cout << "grad_top rows: " << grad_top.rows() << ", cols: " << grad_top.cols() << std::endl;
 
-    opt.update(weight_vec, grad_weight_vec);
-    opt.update(bias_vec, grad_bias_vec);
-}
-
-void Convolution::backward(Matrix &bottom, Matrix &grad_top) {
     int batch_size = bottom.cols();
-    for (int i = 0; i < batch_size; i++) {
+    grad_bottom.resize(height_in * width_in * channel_in, batch_size);
+    grad_weight.setZero();
+    grad_bias.setZero();
+
+    for (int i = 0; i < batch_size; i++)
+    {
         Vector grad_top_i = grad_top.col(i);
         Matrix grad_top_i_matrix = Eigen::Map<Matrix>(grad_top_i.data(), height_out * width_out, channel_out);
+        // std::cout << "data_col rows: " << data_cols[i].rows() << ", cols: " << data_cols[i].cols() << std::endl;
+        // std::cout << "grad_top rows: " << grad_top_i.rows() << ", cols: " << grad_top_i.cols() << std::endl;
 
         grad_weight += data_cols[i].transpose() * grad_top_i_matrix;
         grad_bias += grad_top_i_matrix.colwise().sum().transpose();
@@ -61,40 +69,22 @@ void Convolution::backward(Matrix &bottom, Matrix &grad_top) {
     }
 };
 
-void Convolution::col2im(Matrix &data_col, Vector &image) {
-    image.resize(channel_in * width_in * height_in);
-    image.setZero();
+// https://github.com/iamhankai/mini-dnn-cpp/blob/master/src/layer/conv.cc
+void Convolution::update(Optimizer &opt)
+{
+    Vector::AlignedMapType weight_vec(weight.data(), weight.size());
+    Vector::AlignedMapType bias_vec(bias.data(), bias.size());
+    Vector::ConstAlignedMapType grad_weight_vec(grad_weight.data(), grad_weight.size());
+    Vector::ConstAlignedMapType grad_bias_vec(grad_bias.data(), grad_bias.size());
 
-    int row = 0;
-
-    // Loop through each row in data_col
-    // If stride > 1, not every image pixel will be a nonzero value
-    for (int h_out = 0; h_out < height_out; h_out++) {
-        for (int w_out = 0; w_out < width_out; w_out++) {
-            int col = 0;
-            int h_start = h_out * stride;
-            int w_start = w_out * stride;
-
-            for (int c = 0; c < channel_in; c++) {
-                for (int kh = 0; kh < kernel_height; kh++) {
-                    for (int kw = 0; kw < kernel_width; kw++) {
-                        int h_in = h_start + kh;
-                        int w_in = w_start + kw;
-                        int idx = (c * height_in * width_in) + (h_in * width_in) + w_in;
-                        image(idx) += data_col(row, col);
-                        col++;
-                    }
-                }
-            }
-            row++;
-        }
-    }
+    opt.update(weight_vec, grad_weight_vec);
+    opt.update(bias_vec, grad_bias_vec);
 }
 
-void Convolution::im2col(Vector &image, Matrix &data_col){
-    int num_patches = height_in * height_out;
-    int patch_size = kernel_height * kernel_width * channel_in;
 
+void Convolution::im2col(Vector &image, Matrix &data_col){
+    int num_patches = width_out * height_out;
+    int patch_size = kernel_height * kernel_width * channel_in;
     data_col.resize(num_patches, patch_size);
 
     // row index correponds to an ouput pixel
@@ -127,6 +117,42 @@ void Convolution::im2col(Vector &image, Matrix &data_col){
                 }
             }
             row_idx++;
+        }
+    }
+}
+
+void Convolution::col2im(Matrix &data_col, Vector &image)
+{
+    image.resize(channel_in * width_in * height_in);
+    image.setZero();
+
+    int row = 0;
+
+    // Loop through each row in data_col
+    // If stride > 1, not every image pixel will be a nonzero value
+    for (int h_out = 0; h_out < height_out; h_out++)
+    {
+        for (int w_out = 0; w_out < width_out; w_out++)
+        {
+            int col = 0;
+            int h_start = h_out * stride;
+            int w_start = w_out * stride;
+
+            for (int c = 0; c < channel_in; c++)
+            {
+                for (int kh = 0; kh < kernel_height; kh++)
+                {
+                    for (int kw = 0; kw < kernel_width; kw++)
+                    {
+                        int h_in = h_start + kh;
+                        int w_in = w_start + kw;
+                        int idx = (c * height_in * width_in) + (h_in * width_in) + w_in;
+                        image(idx) += data_col(row, col);
+                        col++;
+                    }
+                }
+            }
+            row++;
         }
     }
 }
