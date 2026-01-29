@@ -34,18 +34,16 @@ int main() {
     int total_test_samples = mnist.test_data.cols();
 
     // Select a small subset of training and test data for quick experimentation
-    int train_size = std::min(200, total_train_samples);
+    int train_size = std::min(1000, total_train_samples);
     int test_size = std::min(32, total_test_samples);
 
     std::cout << "Training set size: " << train_size << std::endl;
     std::cout << "Test set size: " << test_size << std::endl;
 
     train_images = mnist.train_data.block(0, 0, 784, train_size);
-    train_images /= 255.0f;
     train_labels = mnist.train_labels.block(0, 0, 1, train_size);
 
     test_images = mnist.test_data.block(0, 0, 784, test_size);
-    test_images /= 255.0f;
     test_labels = mnist.test_labels.block(0, 0, 1, test_size);
 
     // Set up network layers
@@ -70,11 +68,11 @@ int main() {
     cnn.add_layer(softmax);
 
     Loss* loss = new CrossEntropy();
-    float learning_rate = 0.001f;
+    float learning_rate = 0.005f;
     Optimizer *opt = new SGD(learning_rate);
     cnn.add_loss(loss);
 
-    int epochs = 3;
+    int epochs = 10;
     int batch_size = 32;
     int num_batches = train_size / batch_size;
 
@@ -90,7 +88,7 @@ int main() {
 
     for (int epoch = 0; epoch < epochs; epoch++) {
         std::cout << "Epoch: " << epoch << std::endl;
-
+        int epoch_correct = 0;
         float epoch_loss = 0;
         float epoch_accuracy = 0;
 
@@ -107,25 +105,20 @@ int main() {
                 
             Matrix labels_encoded = one_hot_encode(batch_labels_raw, 10);
 
-            std::cout << "Computing forward pass for batch: " << batch << std::endl;
             cnn.forward(batch_data);       
-
-            std::cout << "Computing backward pass for batch: " << batch << std::endl;
             cnn.backward(batch_data, labels_encoded);
-
-            std::cout << "Updating weights with gradients" << std::endl;
             cnn.update(*opt);
 
             epoch_loss += cnn.get_loss();
-            epoch_accuracy += cnn.get_accuracy();
+            epoch_correct += cnn.get_num_correct();
         }
 
         epoch_loss /= num_batches;
-        epoch_accuracy /= num_batches;
+        epoch_accuracy = (float(epoch_correct) / train_size) * 100.0f;
 
         // Log the networks loss and accuracy at the end of each epoch
         std::cout << "Epoch training loss: " << epoch_loss << std::endl;
-        std::cout << std::setprecision(2) << "Epoch training accuracy: " << epoch_accuracy  << std::endl;
+        std::cout << std::setprecision(4) << "Epoch training accuracy: " << epoch_accuracy << "%" << std::endl;
         std::cout << "---------------------------------------------------------" << std::endl;
     }
 
@@ -134,7 +127,7 @@ int main() {
     cnn.forward(test_images);
     loss->evaluate(cnn.output(), one_hot_encode(test_labels, 10));
     std::cout << "Test loss: " << cnn.get_loss() << std::endl;
-    std::cout << "Test accuracy: " << cnn.get_accuracy() << "%" << std::endl;
+    std::cout << "Test accuracy: " << (float(cnn.get_num_correct()) / test_size) * 100.f << "%" << std::endl;
 
     // Close output text file and restore std::cout buffer
     outputFile.close();

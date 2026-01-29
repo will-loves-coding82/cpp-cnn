@@ -20,8 +20,8 @@ class Convolution : public Layer {
         int width_in, width_out;
         int kernel_width, kernel_height;
         int channel_in, channel_out;
-
         int stride;
+
 
         void init();
 
@@ -31,8 +31,9 @@ class Convolution : public Layer {
         void forward(const Matrix &bottom);
         void backward(const Matrix &bottom, const Matrix &grad_top);
         void update(Optimizer &opt);
-        int output_dim() { return dim_out; }
-        Matrix get_grad_weight() { return grad_weight; }
+
+        int output_dim() { return dim_out; };
+        Matrix get_grad_weight() { return grad_weight; };
 
         void im2col(Vector &img, Matrix &data_col);
         void col2im(Matrix &data_col, Vector &image);

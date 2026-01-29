@@ -6,9 +6,7 @@ void Network::forward (const Matrix &input) {
         std::cout << "layers are empty" << std::endl;
         return;
     }
-
     layers[0]->forward(input);
-
     for (int i = 1; i < layers.size(); i++) {
         layers[i]->forward(layers[i - 1]->output());
     }
@@ -29,19 +27,13 @@ void Network::backward(const Matrix &input, const Matrix &target) {
         layers[i]->backward(layers[i-1]->output(), layers[i + 1]->back_gradient());
     }
 
+    // Update the first layer w.r.t the input
     layers[0]->backward(input, layers[1]->back_gradient());
-
-    std::cout << "DEBUG - FC2 grad_weight norm: " << layers[6]->get_grad_weight().norm() << std::endl;
-    std::cout << "DEBUG - FC1 grad_weight norm: " << layers[4]->get_grad_weight().norm() << std::endl;
-    std::cout << "DEBUG - Conv2 grad_weight norm: " << layers[2]->get_grad_weight().norm() << std::endl;
-    std::cout << "DEBUG - Conv1 grad_weight norm: " << layers[0]->get_grad_weight().norm() << std::endl;
 }
 
 void Network::update(Optimizer &opt) {
     int num_layers = layers.size();
-
-    for (int i = 0; i < num_layers; i++)
-    {
+    for (int i = 0; i < num_layers; i++){
         // Update weights for each layer
         layers[i]->update(opt);
     }

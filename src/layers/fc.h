@@ -1,4 +1,3 @@
-
 #ifndef FC_H_
 #define FC_H_
 
@@ -22,7 +21,7 @@ class FC : public Layer {
         void backward(const Matrix &bottom, const Matrix &grad_top);
         void update(Optimizer &opt);
         int output_dim() { return dim_out; };
-        Matrix get_grad_weight() { return grad_weight; }
+        Matrix get_grad_weight() { return grad_weight; };
 };
 
 #endif

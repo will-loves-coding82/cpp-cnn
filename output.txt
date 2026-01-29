@@ -1,341 +1,57 @@
-Training set size: 200
+Training set size: 1000
 Test set size: 32
 Setting up network layers
 
 Training parameters:
   Num layers: 8
-  Epochs: 3
+  Epochs: 10
   Batch size: 32
-  Batches per epoch: 6
+  Batches per epoch: 31
 
 Mnist train data dimensions: (784 rows, 60000 cols)
 Mnist train label dimensions: (1 rows, 60000 cols)
 ---------------------------------------------------------
 Epoch: 0
-Computing forward pass for batch: 0
-Softmax col sum: 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
-Computing backward pass for batch: 0
-Sample 0: predicted=1, true=5, confidence=0.100762
-Sample 1: predicted=1, true=0, confidence=0.100751
-Sample 2: predicted=1, true=4, confidence=0.100733
-Sample 3: predicted=1, true=1, confidence=0.100789
-Sample 4: predicted=1, true=9, confidence=0.100726
-DEBUG - FC2 grad_weight norm: 0.0168483
-DEBUG - FC1 grad_weight norm: 0.014542
-DEBUG - Conv2 grad_weight norm: 0.00807347
-DEBUG - Conv1 grad_weight norm: 0.00756695
-Updating weights with gradients
-Updating convolution
-Updating convolution
-Updating fully connected
-Updating fully connected
-Computing forward pass for batch: 1
-Softmax col sum: 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
-Computing backward pass for batch: 1
-Sample 0: predicted=1, true=6, confidence=0.100751
-Sample 1: predicted=1, true=9, confidence=0.100775
-Sample 2: predicted=1, true=0, confidence=0.100747
-Sample 3: predicted=1, true=5, confidence=0.100771
-Sample 4: predicted=1, true=6, confidence=0.100773
-DEBUG - FC2 grad_weight norm: 0.0194053
-DEBUG - FC1 grad_weight norm: 0.0117384
-DEBUG - Conv2 grad_weight norm: 0.00767901
-DEBUG - Conv1 grad_weight norm: 0.00739403
-Updating weights with gradients
-Updating convolution
-Updating convolution
-Updating fully connected
-Updating fully connected
-Computing forward pass for batch: 2
-Softmax col sum: 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
-Computing backward pass for batch: 2
-Sample 0: predicted=1, true=4, confidence=0.100733
-Sample 1: predicted=1, true=5, confidence=0.100754
-Sample 2: predicted=1, true=6, confidence=0.100762
-Sample 3: predicted=1, true=1, confidence=0.100777
-Sample 4: predicted=1, true=0, confidence=0.100705
-DEBUG - FC2 grad_weight norm: 0.0195718
-DEBUG - FC1 grad_weight norm: 0.0125585
-DEBUG - Conv2 grad_weight norm: 0.00953746
-DEBUG - Conv1 grad_weight norm: 0.00812174
-Updating weights with gradients
-Updating convolution
-Updating convolution
-Updating fully connected
-Updating fully connected
-Computing forward pass for batch: 3
-Softmax col sum: 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
-Computing backward pass for batch: 3
-Sample 0: predicted=1, true=7, confidence=0.100772
-Sample 1: predicted=1, true=8, confidence=0.100745
-Sample 2: predicted=1, true=3, confidence=0.100702
-Sample 3: predicted=1, true=1, confidence=0.100797
-Sample 4: predicted=1, true=5, confidence=0.100754
-DEBUG - FC2 grad_weight norm: 0.020889
-DEBUG - FC1 grad_weight norm: 0.0142388
-DEBUG - Conv2 grad_weight norm: 0.00894085
-DEBUG - Conv1 grad_weight norm: 0.00732355
-Updating weights with gradients
-Updating convolution
-Updating convolution
-Updating fully connected
-Updating fully connected
-Computing forward pass for batch: 4
-Softmax col sum: 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
-Computing backward pass for batch: 4
-Sample 0: predicted=1, true=1, confidence=0.100784
-Sample 1: predicted=1, true=6, confidence=0.100792
-Sample 2: predicted=1, true=3, confidence=0.100736
-Sample 3: predicted=1, true=4, confidence=0.100813
-Sample 4: predicted=1, true=5, confidence=0.100771
-DEBUG - FC2 grad_weight norm: 0.0133586
-DEBUG - FC1 grad_weight norm: 0.00983946
-DEBUG - Conv2 grad_weight norm: 0.0073203
-DEBUG - Conv1 grad_weight norm: 0.00674872
-Updating weights with gradients
-Updating convolution
-Updating convolution
-Updating fully connected
-Updating fully connected
-Computing forward pass for batch: 5
-Softmax col sum: 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
-Computing backward pass for batch: 5
-Sample 0: predicted=1, true=8, confidence=0.100747
-Sample 1: predicted=1, true=2, confidence=0.100746
-Sample 2: predicted=1, true=9, confidence=0.100749
-Sample 3: predicted=1, true=4, confidence=0.100804
-Sample 4: predicted=1, true=4, confidence=0.100754
-DEBUG - FC2 grad_weight norm: 0.0221718
-DEBUG - FC1 grad_weight norm: 0.0155158
-DEBUG - Conv2 grad_weight norm: 0.0094557
-DEBUG - Conv1 grad_weight norm: 0.00837077
-Updating weights with gradients
-Updating convolution
-Updating convolution
-Updating fully connected
-Updating fully connected
-Epoch training loss: 2.30243
-Epoch training accuracy: 2.3
+Epoch training loss: 1.77493
+Epoch training accuracy: 44.4%
 ---------------------------------------------------------
 Epoch: 1
-Computing forward pass for batch: 0
-Softmax col sum: 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
-Computing backward pass for batch: 0
-Sample 0: predicted=1, true=5, confidence=0.1
-Sample 1: predicted=1, true=0, confidence=0.1
-Sample 2: predicted=1, true=4, confidence=0.1
-Sample 3: predicted=1, true=1, confidence=0.1
-Sample 4: predicted=1, true=9, confidence=0.1
-DEBUG - FC2 grad_weight norm: 0.017
-DEBUG - FC1 grad_weight norm: 0.015
-DEBUG - Conv2 grad_weight norm: 0.0081
-DEBUG - Conv1 grad_weight norm: 0.0076
-Updating weights with gradients
-Updating convolution
-Updating convolution
-Updating fully connected
-Updating fully connected
-Computing forward pass for batch: 1
-Softmax col sum: 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
-Computing backward pass for batch: 1
-Sample 0: predicted=1, true=6, confidence=0.1
-Sample 1: predicted=1, true=9, confidence=0.1
-Sample 2: predicted=1, true=0, confidence=0.1
-Sample 3: predicted=1, true=5, confidence=0.1
-Sample 4: predicted=1, true=6, confidence=0.1
-DEBUG - FC2 grad_weight norm: 0.019
-DEBUG - FC1 grad_weight norm: 0.012
-DEBUG - Conv2 grad_weight norm: 0.0077
-DEBUG - Conv1 grad_weight norm: 0.0078
-Updating weights with gradients
-Updating convolution
-Updating convolution
-Updating fully connected
-Updating fully connected
-Computing forward pass for batch: 2
-Softmax col sum: 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
-Computing backward pass for batch: 2
-Sample 0: predicted=1, true=4, confidence=0.1
-Sample 1: predicted=1, true=5, confidence=0.1
-Sample 2: predicted=1, true=6, confidence=0.1
-Sample 3: predicted=1, true=1, confidence=0.1
-Sample 4: predicted=1, true=0, confidence=0.1
-DEBUG - FC2 grad_weight norm: 0.02
-DEBUG - FC1 grad_weight norm: 0.013
-DEBUG - Conv2 grad_weight norm: 0.0095
-DEBUG - Conv1 grad_weight norm: 0.0081
-Updating weights with gradients
-Updating convolution
-Updating convolution
-Updating fully connected
-Updating fully connected
-Computing forward pass for batch: 3
-Softmax col sum: 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
-Computing backward pass for batch: 3
-Sample 0: predicted=1, true=7, confidence=0.1
-Sample 1: predicted=1, true=8, confidence=0.1
-Sample 2: predicted=1, true=3, confidence=0.1
-Sample 3: predicted=1, true=1, confidence=0.1
-Sample 4: predicted=1, true=5, confidence=0.1
-DEBUG - FC2 grad_weight norm: 0.021
-DEBUG - FC1 grad_weight norm: 0.014
-DEBUG - Conv2 grad_weight norm: 0.009
-DEBUG - Conv1 grad_weight norm: 0.0078
-Updating weights with gradients
-Updating convolution
-Updating convolution
-Updating fully connected
-Updating fully connected
-Computing forward pass for batch: 4
-Softmax col sum: 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
-Computing backward pass for batch: 4
-Sample 0: predicted=1, true=1, confidence=0.1
-Sample 1: predicted=1, true=6, confidence=0.1
-Sample 2: predicted=1, true=3, confidence=0.1
-Sample 3: predicted=1, true=4, confidence=0.1
-Sample 4: predicted=1, true=5, confidence=0.1
-DEBUG - FC2 grad_weight norm: 0.013
-DEBUG - FC1 grad_weight norm: 0.0098
-DEBUG - Conv2 grad_weight norm: 0.0073
-DEBUG - Conv1 grad_weight norm: 0.007
-Updating weights with gradients
-Updating convolution
-Updating convolution
-Updating fully connected
-Updating fully connected
-Computing forward pass for batch: 5
-Softmax col sum: 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
-Computing backward pass for batch: 5
-Sample 0: predicted=1, true=8, confidence=0.1
-Sample 1: predicted=1, true=2, confidence=0.1
-Sample 2: predicted=1, true=9, confidence=0.1
-Sample 3: predicted=1, true=4, confidence=0.1
-Sample 4: predicted=1, true=4, confidence=0.1
-DEBUG - FC2 grad_weight norm: 0.022
-DEBUG - FC1 grad_weight norm: 0.016
-DEBUG - Conv2 grad_weight norm: 0.0096
-DEBUG - Conv1 grad_weight norm: 0.0083
-Updating weights with gradients
-Updating convolution
-Updating convolution
-Updating fully connected
-Updating fully connected
-Epoch training loss: 2.3
-Epoch training accuracy: 2.3
+Epoch training loss: 0.7668
+Epoch training accuracy: 74%
 ---------------------------------------------------------
 Epoch: 2
-Computing forward pass for batch: 0
-Softmax col sum: 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
-Computing backward pass for batch: 0
-Sample 0: predicted=1, true=5, confidence=0.1
-Sample 1: predicted=1, true=0, confidence=0.1
-Sample 2: predicted=1, true=4, confidence=0.1
-Sample 3: predicted=1, true=1, confidence=0.1
-Sample 4: predicted=1, true=9, confidence=0.1
-DEBUG - FC2 grad_weight norm: 0.017
-DEBUG - FC1 grad_weight norm: 0.015
-DEBUG - Conv2 grad_weight norm: 0.008
-DEBUG - Conv1 grad_weight norm: 0.0072
-Updating weights with gradients
-Updating convolution
-Updating convolution
-Updating fully connected
-Updating fully connected
-Computing forward pass for batch: 1
-Softmax col sum: 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
-Computing backward pass for batch: 1
-Sample 0: predicted=1, true=6, confidence=0.1
-Sample 1: predicted=1, true=9, confidence=0.1
-Sample 2: predicted=1, true=0, confidence=0.1
-Sample 3: predicted=1, true=5, confidence=0.1
-Sample 4: predicted=1, true=6, confidence=0.1
-DEBUG - FC2 grad_weight norm: 0.019
-DEBUG - FC1 grad_weight norm: 0.012
-DEBUG - Conv2 grad_weight norm: 0.0077
-DEBUG - Conv1 grad_weight norm: 0.0075
-Updating weights with gradients
-Updating convolution
-Updating convolution
-Updating fully connected
-Updating fully connected
-Computing forward pass for batch: 2
-Softmax col sum: 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
-Computing backward pass for batch: 2
-Sample 0: predicted=1, true=4, confidence=0.1
-Sample 1: predicted=1, true=5, confidence=0.1
-Sample 2: predicted=1, true=6, confidence=0.1
-Sample 3: predicted=1, true=1, confidence=0.1
-Sample 4: predicted=1, true=0, confidence=0.1
-DEBUG - FC2 grad_weight norm: 0.02
-DEBUG - FC1 grad_weight norm: 0.013
-DEBUG - Conv2 grad_weight norm: 0.0096
-DEBUG - Conv1 grad_weight norm: 0.0083
-Updating weights with gradients
-Updating convolution
-Updating convolution
-Updating fully connected
-Updating fully connected
-Computing forward pass for batch: 3
-Softmax col sum: 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
-Computing backward pass for batch: 3
-Sample 0: predicted=1, true=7, confidence=0.1
-Sample 1: predicted=1, true=8, confidence=0.1
-Sample 2: predicted=1, true=3, confidence=0.1
-Sample 3: predicted=1, true=1, confidence=0.1
-Sample 4: predicted=1, true=5, confidence=0.1
-DEBUG - FC2 grad_weight norm: 0.021
-DEBUG - FC1 grad_weight norm: 0.014
-DEBUG - Conv2 grad_weight norm: 0.009
-DEBUG - Conv1 grad_weight norm: 0.0072
-Updating weights with gradients
-Updating convolution
-Updating convolution
-Updating fully connected
-Updating fully connected
-Computing forward pass for batch: 4
-Softmax col sum: 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
-Computing backward pass for batch: 4
-Sample 0: predicted=1, true=1, confidence=0.1
-Sample 1: predicted=1, true=6, confidence=0.1
-Sample 2: predicted=1, true=3, confidence=0.1
-Sample 3: predicted=1, true=4, confidence=0.1
-Sample 4: predicted=1, true=5, confidence=0.1
-DEBUG - FC2 grad_weight norm: 0.013
-DEBUG - FC1 grad_weight norm: 0.0098
-DEBUG - Conv2 grad_weight norm: 0.0073
-DEBUG - Conv1 grad_weight norm: 0.0067
-Updating weights with gradients
-Updating convolution
-Updating convolution
-Updating fully connected
-Updating fully connected
-Computing forward pass for batch: 5
-Softmax col sum: 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
-Computing backward pass for batch: 5
-Sample 0: predicted=1, true=8, confidence=0.1
-Sample 1: predicted=1, true=2, confidence=0.1
-Sample 2: predicted=1, true=9, confidence=0.1
-Sample 3: predicted=1, true=4, confidence=0.1
-Sample 4: predicted=1, true=4, confidence=0.1
-DEBUG - FC2 grad_weight norm: 0.022
-DEBUG - FC1 grad_weight norm: 0.016
-DEBUG - Conv2 grad_weight norm: 0.0094
-DEBUG - Conv1 grad_weight norm: 0.0078
-Updating weights with gradients
-Updating convolution
-Updating convolution
-Updating fully connected
-Updating fully connected
-Epoch training loss: 2.3
-Epoch training accuracy: 2.3
+Epoch training loss: 0.4244
+Epoch training accuracy: 86.3%
+---------------------------------------------------------
+Epoch: 3
+Epoch training loss: 0.2716
+Epoch training accuracy: 91.2%
+---------------------------------------------------------
+Epoch: 4
+Epoch training loss: 0.1818
+Epoch training accuracy: 93.5%
+---------------------------------------------------------
+Epoch: 5
+Epoch training loss: 0.1202
+Epoch training accuracy: 95.5%
+---------------------------------------------------------
+Epoch: 6
+Epoch training loss: 0.07835
+Epoch training accuracy: 97.2%
+---------------------------------------------------------
+Epoch: 7
+Epoch training loss: 0.04732
+Epoch training accuracy: 98.1%
+---------------------------------------------------------
+Epoch: 8
+Epoch training loss: 0.02408
+Epoch training accuracy: 98.9%
+---------------------------------------------------------
+Epoch: 9
+Epoch training loss: 0.01403
+Epoch training accuracy: 99%
 ---------------------------------------------------------
 
 --- Test Set Evaluation ---
-Softmax col sum: 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
-Sample 0: predicted=1, true=7, confidence=0.1
-Sample 1: predicted=1, true=2, confidence=0.1
-Sample 2: predicted=1, true=1, confidence=0.1
-Sample 3: predicted=1, true=0, confidence=0.1
-Sample 4: predicted=1, true=4, confidence=0.1
-Test loss: 2.3
-Test accuracy: 2.3%
+Test loss: 0.1927
+Test accuracy: 93.75%

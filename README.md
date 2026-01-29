@@ -1,7 +1,13 @@
 ## Overview
-A convolutional neural network implementation inspired by the mini-DNN framework. This project was developed to deepen my understanding of the mathematical foundations underlying neural network operations and gradient computation during backpropagation. The codebase is primarily implemented in C++ and provides abstractions comparable to high-level Python frameworks such as Keras layers. Future development will focus on optimizing performance through GPU acceleration.
+A convolutional neural network implementation inspired by the mini-DNN framework. This project was developed to deepen my understanding of the mathematical foundations underlying neural network operations and gradient computation during backpropagation. The codebase is primarily implemented in C++ and provides abstractions comparable to high-level Python frameworks such as Keras layers. Claude AI was utilized to help troubleshoot syntax and core logic throughout the development process. Future development will focus on optimizing performance through GPU acceleration. 
+
+<hr/>
 
 ## Code Organization
+
+```Makefile or CMAkeLists.txt/```
+Helps with building the project's code in an automatic fashion.
+
 
 ```bin/```
 This folder contains a C++ binary that will run the training process and perform predictions on a small test dataset. Metrics such as loss and accuracy will be provided at the end of each epoch to observe how the model changes over time. Logs will be written to an `output.txt` file for execution tracing.
@@ -18,17 +24,12 @@ This folder contains the code required to build the convolutional neural network
  - `mnist`: Helper class from a 3rd party github repository that can load MNIST data
  - `opt`: Contains the code for the Stochastic Gradient Descent, responsible for updating the networks weights at a specific layer.
  - `main.cpp`: Builds the CNN using 2
- - `network.cpp`
+ - `network.cpp`: Defines the class implementation to manage the neural network's layers.
 
-```README.md```
-This file should hold the description of the project so that anyone cloning or deciding if they want to clone this repository can understand its purpose to help with their decision.
+<hr/>
 
-```INSTALL```
-This file should hold the human-readable set of instructions for installing the code so that it can be executed. If possible it should be organized around different operating systems, so that it can be done by as many people as possible with different constraints.
 
-```Makefile or CMAkeLists.txt or build.sh```
-There should be some rudimentary scripts for building your project's code in an automatic fashion.
+## Results
+To train the model, I selected a subset of 1000 MNIST training images and labels. I then performed 10 epochs (i.e. 10 complete passes through the training set) while observing the average loss and accuracy at the end of each epoch. 
 
-```run.sh```
-An optional script used to run your executable code, either with or without command-line arguments.
-
+The model performed well but soon experienced overfitting with an average accuracy of 99.1% by the end of the training process. Going forward, the model could benefit from several modifications such as validation datasets, regularization, dropout layers, and max pooling in order to prevent overfitting.
