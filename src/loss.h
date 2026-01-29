@@ -6,6 +6,7 @@
 class Loss {
     protected:
         float loss;
+        float accuracy;
 
         // Gradient w.r.t input. Used for back propogation starting from 
         // the last output layer
@@ -18,6 +19,7 @@ class Loss {
         virtual ~Loss(){};
         virtual void evaluate(const Matrix &pred, const Matrix &target) = 0;
         virtual float output() { return loss; };
+        virtual float get_accuracy() { return accuracy; };
         virtual const Matrix& back_gradient() { return grad_bottom; };
 };
 

@@ -20,7 +20,9 @@ class FC : public Layer {
         FC(int input_dim, int output_dim);
         void forward(const Matrix &bottom);
         void backward(const Matrix &bottom, const Matrix &grad_top);
+        void update(Optimizer &opt);
         int output_dim() { return dim_out; };
+        Matrix get_grad_weight() { return grad_weight; }
 };
 
 #endif

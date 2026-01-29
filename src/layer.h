@@ -38,9 +38,9 @@ public:
     // layer has no weights to update.
     
     virtual void update(Optimizer &opt) {};
+    virtual Matrix get_grad_weight() {};
     virtual const Matrix &output() { return top; };
     virtual const Matrix &back_gradient() { return grad_bottom; };
-
     virtual int output_dim() { return -1; };
 };
 

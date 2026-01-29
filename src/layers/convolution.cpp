@@ -1,5 +1,6 @@
 #include "./convolution.h"
 #include <iostream>
+#include <omp.h>
 
 Convolution::Convolution(int height_in, int width_in, int kernel_width, int kernel_height,
                          int channel_in, int channel_out, int stride) : height_in(height_in), width_in(width_in), kernel_width(kernel_width), kernel_height(kernel_height),
@@ -23,43 +24,38 @@ void Convolution::forward(const Matrix &bottom) {
     top.resize(height_out * width_out * channel_out, batch_size);
     data_cols.resize(batch_size);
 
-    for (int i = 0; i < batch_size; i++) {
-        // Convert to im2col for GEMM
+    #pragma omp parallel for
+    for (int i = 0; i < batch_size; i++)
+    {
         Vector image = bottom.col(i);
-        Matrix data_col;
-        // std::cout << "performing im2col on image " << i << std::endl;
-        im2col(image, data_col);
-        data_cols[i] = data_col;
-        // std::cout << "calculated im2col successfully" << std::endl;
-
-        Matrix result = data_col * weight;
+        im2col(image, data_cols[i]);
+        Matrix result = data_cols[i] * weight;
         result.rowwise() += bias.transpose();
         top.col(i) = Eigen::Map<Vector>(result.data(), result.size());
     }
 };
 
 void Convolution::backward(const Matrix &bottom, const Matrix &grad_top) {
-    std::cout << "computing Conv backward" << std::endl;
-    std::cout << "bottom rows: " << bottom.rows() << ", cols: " << bottom.cols() << std::endl;
-    std::cout << "grad_top rows: " << grad_top.rows() << ", cols: " << grad_top.cols() << std::endl;
-
     int batch_size = bottom.cols();
     grad_bottom.resize(height_in * width_in * channel_in, batch_size);
     grad_weight.setZero();
     grad_bias.setZero();
-
-    for (int i = 0; i < batch_size; i++)
-    {
+    
+    #pragma omp parallel for
+    for (int i = 0; i < batch_size; i++) {
         Vector grad_top_i = grad_top.col(i);
-        Matrix grad_top_i_matrix = Eigen::Map<Matrix>(grad_top_i.data(), height_out * width_out, channel_out);
-        // std::cout << "data_col rows: " << data_cols[i].rows() << ", cols: " << data_cols[i].cols() << std::endl;
-        // std::cout << "grad_top rows: " << grad_top_i.rows() << ", cols: " << grad_top_i.cols() << std::endl;
+        Matrix grad_top_i_matrix = Eigen::Map<Matrix>(grad_top_i.data(),
+                                                      height_out * width_out,
+                                                      channel_out);
 
+        // Gradient w.r.t. weights: data_col.T @ grad_out
         grad_weight += data_cols[i].transpose() * grad_top_i_matrix;
+
+        // Gradient w.r.t. bias: sum over batch
         grad_bias += grad_top_i_matrix.colwise().sum().transpose();
 
+        // Gradient w.r.t. input: grad_out @ weight.T, then col2im
         Matrix grad_bottom_i = grad_top_i_matrix * weight.transpose();
-
         // convert bottom gradients on patches -> gradients on image space
         // This also means we accumulate gradients for each image pixel since
         // there is data redundancy
@@ -72,6 +68,7 @@ void Convolution::backward(const Matrix &bottom, const Matrix &grad_top) {
 // https://github.com/iamhankai/mini-dnn-cpp/blob/master/src/layer/conv.cc
 void Convolution::update(Optimizer &opt)
 {
+    std::cout << "Updating convolution" << std::endl;
     Vector::AlignedMapType weight_vec(weight.data(), weight.size());
     Vector::AlignedMapType bias_vec(bias.data(), bias.size());
     Vector::ConstAlignedMapType grad_weight_vec(grad_weight.data(), grad_weight.size());
@@ -79,6 +76,9 @@ void Convolution::update(Optimizer &opt)
 
     opt.update(weight_vec, grad_weight_vec);
     opt.update(bias_vec, grad_bias_vec);
+
+    grad_weight.setZero();
+    grad_bias.setZero();
 }
 
 

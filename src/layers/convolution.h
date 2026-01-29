@@ -32,6 +32,7 @@ class Convolution : public Layer {
         void backward(const Matrix &bottom, const Matrix &grad_top);
         void update(Optimizer &opt);
         int output_dim() { return dim_out; }
+        Matrix get_grad_weight() { return grad_weight; }
 
         void im2col(Vector &img, Matrix &data_col);
         void col2im(Matrix &data_col, Vector &image);

@@ -17,11 +17,6 @@ FC::FC(int input_dim, int output_dim) {
 }
 
 void FC::forward(const Matrix &bottom) {
-    std::cout << "computing FC forward" << std::endl;
-    std::cout << "bottom rows: " << bottom.rows() << ", cols: " << bottom.cols() << std::endl;
-    std::cout << "weight rows: " << weight.rows() << ", cols: " << weight.cols() << std::endl;
-    std::cout << "weight.transpose() rows: " << weight.transpose().rows() << ", cols: " << weight.transpose().cols() << std::endl;
-
     int batch_size = bottom.cols();
     top.resize(dim_out, batch_size);
 
@@ -30,14 +25,26 @@ void FC::forward(const Matrix &bottom) {
 }
 
 void FC::backward(const Matrix &bottom, const Matrix &grad_top) {
-    std::cout << "computing FC backward" << std::endl;
-    std::cout << "bottom rows: " << bottom.rows() << ", cols: " << bottom.cols() << std::endl;
-    std::cout << "grad_top rows: " << grad_top.rows() << ", cols: " << grad_top.cols() << std::endl;
-
     int batch_size = bottom.cols();
-    grad_weight += bottom * grad_top.transpose();
-    grad_bias += grad_top.rowwise().sum();
+    grad_weight = bottom * grad_top.transpose();
+    grad_bias = grad_top.rowwise().sum();
 
     grad_bottom.resize(dim_in, batch_size);
     grad_bottom = weight * grad_top;
+}
+
+void FC::update(Optimizer &opt)
+{
+
+    std::cout << "Updating fully connected" << std::endl;
+    Vector::AlignedMapType weight_vec(weight.data(), weight.size());
+    Vector::AlignedMapType bias_vec(bias.data(), bias.size());
+    Vector::ConstAlignedMapType grad_weight_vec(grad_weight.data(), grad_weight.size());
+    Vector::ConstAlignedMapType grad_bias_vec(grad_bias.data(), grad_bias.size());
+
+    opt.update(weight_vec, grad_weight_vec);
+    opt.update(bias_vec, grad_bias_vec);
+
+    grad_weight.setZero();
+    grad_bias.setZero();
 }

@@ -30,14 +30,14 @@
 # Makefile project only supported on Mac OS X and Linux Platforms)
 #
 ################################################################################
-
 # Define the compiler and flags
 NVCC = /usr/local/cuda/bin/nvcc
 CXX = g++
 
 # Tell the compiler to look for cuda and Eigen header files
 CXXFLAGS = -std=c++17 -I/usr/local/cuda/include -I./src -Iinclude
-LDFLAGS = -L/usr/local/cuda/lib64 -lcudart -lnppc -lnppial -lnppicc -lnppidei -lnppif -lnppig -lnppim -lnppist -lnppisu -lnppitc
+OPENMP_FLAGS = -Xcompiler -fopenmp
+LDFLAGS = -L/usr/local/cuda/lib64 -lcudart -lnppc -lnppial -lnppicc -lnppidei -lnppif -lnppig -lnppim -lnppist -lnppisu -lnppitc -lgomp
 
 # Define directories
 SRC_DIR = src
@@ -54,7 +54,7 @@ all: $(TARGET)
 # Rule for building the target executable
 $(TARGET): $(SRC)
 	mkdir -p $(BIN_DIR)
-	$(NVCC) $(CXXFLAGS) $(SRC) -o $(TARGET) $(LDFLAGS)
+	$(NVCC) $(CXXFLAGS) $(OPENMP_FLAGS) -O3 $(SRC) -o $(TARGET) $(LDFLAGS)
 
 # Clean up
 clean:

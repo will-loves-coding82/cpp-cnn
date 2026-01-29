@@ -1,21 +1,24 @@
-# Example README.md file for Coursera Projects
-
 ## Overview
-A WIP Convolutional Neural Network inspired by the mini-DNN framework. I was heavily motivated to learn the mathemetical reasoning at each layer and the process to compute gradients during back propogation. Much of the code is written in C++ and mirrors much of the same functionality as high level Python libraries like Keras Layers. My goal is to eventually speed certain calculations with GPU acceleration.
+A convolutional neural network implementation inspired by the mini-DNN framework. This project was developed to deepen my understanding of the mathematical foundations underlying neural network operations and gradient computation during backpropagation. The codebase is primarily implemented in C++ and provides abstractions comparable to high-level Python frameworks such as Keras layers. Future development will focus on optimizing performance through GPU acceleration.
 
 ## Code Organization
 
 ```bin/```
-This folder should hold all binary/executable code that is built automatically or manually. Executable code should have use the .exe extension or programming language-specific extension.
+This folder contains a C++ binary that will run the training process and perform predictions on a small test dataset. Metrics such as loss and accuracy will be provided at the end of each epoch to observe how the model changes over time. Logs will be written to an `output.txt` file for execution tracing.
 
 ```data/```
-This folder should hold all example data in any format. If the original data is rather large or can be brought in via scripts, this can be left blank in the respository, so that it doesn't require major downloads when all that is desired is the code/structure.
-
-```lib/```
-Any libraries that are not installed via the Operating System-specific package manager should be placed here, so that it is easier for inclusion/linking.
+This folder contains a dataset of 10k MNIST images and labels. 
 
 ```src/```
-The source code should be placed here in a hierarchical fashion, as appropriate.
+This folder contains the code required to build the convolutional neural network
+ 
+ - `Eigen`: C++ library that contains data structures for linear algebra operations
+ - `layers`: Contains the header and cpp files for convolution, fully connected, reLU, and softmax layers
+ - `loss`: Contains the cross entropy code to evaluate the loss during training
+ - `mnist`: Helper class from a 3rd party github repository that can load MNIST data
+ - `opt`: Contains the code for the Stochastic Gradient Descent, responsible for updating the networks weights at a specific layer.
+ - `main.cpp`: Builds the CNN using 2
+ - `network.cpp`
 
 ```README.md```
 This file should hold the description of the project so that anyone cloning or deciding if they want to clone this repository can understand its purpose to help with their decision.
