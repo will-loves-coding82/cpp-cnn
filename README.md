@@ -23,7 +23,7 @@ This folder contains the code required to build the convolutional neural network
  - `loss`: Contains the cross entropy code to evaluate the loss during training
  - `mnist`: Helper class from a 3rd party github repository that can load MNIST data
  - `opt`: Contains the code for the Stochastic Gradient Descent, responsible for updating the networks weights at a specific layer.
- - `main.cpp`: Builds the CNN using 2
+ - `main.cpp`: Builds the CNN and scaffolds the training / test processes
  - `network.cpp`: Defines the class implementation to manage the neural network's layers.
 
 <hr/>
